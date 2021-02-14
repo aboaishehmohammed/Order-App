@@ -1,0 +1,29 @@
+<link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+<ion-app dir="rtl">
+
+    <ion-menu contentId="main-content" type="overlay" side="end">
+        <ion-content>
+            <ion-list id="inbox-list">
+                <ion-row class="ion-justify-content-center">
+                    <ion-col size="7">
+
+                        <ion-img src="/assets/logo.png"></ion-img>
+
+                    </ion-col>
+                </ion-row>
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+                    <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
+                              detail="false" [class.selected]="selectedIndex == i">
+                        <ion-icon color="theme-primary" slot="start" [ios]="p.icon + '-outline'"
+                                  [md]="p.icon + '-sharp'"></ion-icon>
+                        <ion-label color="theme-primary">{{ p.title }}</ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+
+
+        </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+</ion-app>

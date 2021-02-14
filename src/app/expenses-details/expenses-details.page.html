@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-toolbar color="theme-primary">
+        <ion-title *ngIf="category">
+            {{category.name}}
+        </ion-title>
+        <ion-buttons>
+            <ion-back-button style="color: white" text="عودة" icon="arrow-forward"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="category">
+    <ion-item *ngIf="expenses.length!=0">
+        <ion-label>
+            تحديد تاريخ المصاريف
+        </ion-label>
+        <ion-checkbox [(ngModel)]="checked" color="theme-primary" name="delivery"
+                      *ngIf="expenses.length!=0"></ion-checkbox>
+    </ion-item>
+
+    <ng-container *ngIf="checked">
+        <form #filterForm="ngForm">
+            <ion-item>
+                <ion-label>تاريخ البداية</ion-label>
+                <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="filter_dates.start_date" name="start_date"
+                              placeholder="Select start_Date" required=""></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label>تاريخ النهاية</ion-label>
+                <ion-datetime displayFormat="DD-MM-YYYY" [min]="filter_dates.start_date" [(ngModel)]="filter_dates.end_date"
+                              name="end_date" placeholder="Select end_Date" required></ion-datetime>
+            </ion-item>
+
+            <ion-button [disabled]="filterForm.invalid" color="theme-primary" (click)="filterExpenses()">اختيار
+            </ion-button>
+        </form>
+    </ng-container>
+    <!--    add expenses-->
+    <ion-item >
+        <ion-label>
+            اضافة المصاريف
+        </ion-label>
+        <ion-checkbox [(ngModel)]="checked_expense" color="theme-primary" name="delivery"
+                      ></ion-checkbox>
+    </ion-item>
+    <ng-container *ngIf="checked_expense"><form #orderForm="ngForm">
+        <ion-item>
+            <ion-label position="floating">المصاريف</ion-label>
+            <ion-input type="text" [(ngModel)]="expense.name" name="name" id="name" #name_e='ngModel' required></ion-input>
+            <p *ngIf="name_e.invalid&&name_e.touched">Please Select correct value</p>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">قيمة الصرف</ion-label>
+            <ion-input type="number" min="0" [(ngModel)]="expense.price" name="price" id="price" #price_e='ngModel' required></ion-input>
+            <p *ngIf="price_e.invalid&&price_e.touched">Please Select correct value</p>
+        </ion-item>
+        <ion-button [disabled]="orderForm.invalid" (click)="store()" expand="full" color="theme-primary" > اضافة </ion-button>
+
+    </form>
+    </ng-container>
+        <ion-row *ngIf="category " class="ion-justify-content-start">
+        <ion-col size="1"> #</ion-col>
+
+        <ion-col size="3">الاسم</ion-col>
+
+        <ion-col size="3">القيمة</ion-col>
+        <ion-col size="3">التاريخ</ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-start" *ngFor="let item of expenses;let i=index">
+        <ion-col size="1"> {{i + 1}} </ion-col>
+
+        <ion-col size="3">{{item.name}}</ion-col>
+
+        <ion-col size="3">{{item.price}}</ion-col>
+        <ion-col size="3">{{item.created_at|date:'dd-M-yyyy hh:mm:ss'}}</ion-col>
+    </ion-row>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

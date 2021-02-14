@@ -1,0 +1,94 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>اضافة فاتورة</ion-title>
+        <ion-label slot="end" (click)="dismiss()">اغلاق</ion-label>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form #orderForm="ngForm">
+        <ion-item>
+            <ion-label position="floating">الخصم</ion-label>
+            <ion-input [(ngModel)]="sale" #sale_f='ngModel' min="0" [max]="total" type="number" id="sale" name="sale"
+                       required></ion-input>
+            <p *ngIf="sale_f.invalid">Please Select correct value</p>
+        </ion-item>
+        <ion-item>
+            <ion-label >
+                هل ترغب باضافة شيء؟
+            </ion-label>
+            <ion-checkbox #checked_e="ngModel"  [(ngModel)]="checked_extra" name="checked_extra" > </ion-checkbox>
+        </ion-item>
+        <ng-container *ngIf="checked_extra">
+            <ion-item>
+                <ion-label position="floating">اسم الاضافة</ion-label>
+                <ion-input [(ngModel)]="extra_name" #extra_n='ngModel'  type="text" id="extra_name" name="extra_name"
+                           ></ion-input>
+                <p *ngIf="extra_n.invalid&&extra_n.touched">Please Select correct value</p>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">سعر الاضافة</ion-label>
+                <ion-input [(ngModel)]="extra_price" #extra_p='ngModel' min="0" [max]="total" type="number" id="extra_price" name="extra_price"
+                           required></ion-input>
+                <p *ngIf="extra_p.invalid&&extra_p.touched">Please Select correct value</p>
+            </ion-item>
+        </ng-container>
+        <ng-container *ngIf="id">
+            <ion-item >
+                <ion-label position="floating">الاسم</ion-label>
+                <ion-input type="text" name="name" #name_d='ngModel' [(ngModel)]="delivery.name" required></ion-input>
+                <p *ngIf="name_d.invalid&&name_d.touched">Please Select correct value</p>
+            </ion-item>
+        <ion-item >
+            <ion-label position="floating">العنوان</ion-label>
+            <ion-input type="text" name="address" [(ngModel)]="delivery.address"></ion-input>
+        </ion-item>
+        <ion-item >
+            <ion-label position="floating">قيمة التوصيل</ion-label>
+            <ion-input type="number" id="delivery_fees" #price_d='ngModel' min="0" name="delivery_fees" [(ngModel)]="delivery.delivery_fees"
+                       required></ion-input>
+            <p *ngIf="price_d.invalid&&price_d.touched">Please Select correct value</p>
+        </ion-item>
+        <ion-item >
+            <ion-label position="floating">وقت التوصيل</ion-label>
+            <ion-datetime name="delivery_time" displayFormat="YYYY-MM-DD hh:mm a" [(ngModel)]="delivery.delivery_time"
+                          required="" doneText="موافق" cancelText="الغاء"></ion-datetime>
+        </ion-item>
+        <ion-item >
+            <ion-label position="floating">رقم الهاتف</ion-label>
+            <ion-input name="mobile" type="text" [(ngModel)]="delivery.mobile"></ion-input>
+        </ion-item>
+            <ion-item>
+                <ion-label >
+                    هل ترغب باضافة رهن
+                </ion-label>
+                <ion-checkbox #checked_m="ngModel"  [(ngModel)]="checked_morts" name="checked_morts" > </ion-checkbox>
+            </ion-item>
+<ng-container *ngIf="checked_morts">
+    <ion-item>
+        <ion-label position="floating">الرهن</ion-label>
+        <ion-input [(ngModel)]="morts_label" #morts_l='ngModel'  type="text" id="morts_label" name="morts_label"
+                    ></ion-input>
+        <p *ngIf="morts_l.invalid">Please Select correct value</p>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">السعر</ion-label>
+        <ion-input [(ngModel)]="morts_price" #morts_p='ngModel' min="0"  type="number" id="morts_price" name="morts_price"
+                   required></ion-input>
+        <p *ngIf="morts_p.invalid">Please Select correct value</p>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">الكمية</ion-label>
+        <ion-input [(ngModel)]="morts_qty" #morts_q='ngModel' min="0"  type="number" id="morts_qty" name="morts_qty"
+                   required></ion-input>
+        <p *ngIf="morts_q.invalid">Please Select correct value</p>
+    </ion-item>
+</ng-container>
+        </ng-container>
+    </form>
+</ion-content>
+<ion-footer>
+
+    <ion-button style="width: 100%" [disabled]="orderForm.invalid" color="theme-primary" (click)="store()"> اضافة الفاتورة</ion-button>
+
+</ion-footer>

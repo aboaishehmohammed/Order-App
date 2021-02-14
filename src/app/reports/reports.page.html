@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar color="theme-primary">
+    <ion-title>
+      التقارير
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button style="color: white" [defaultHref]="'/'" icon="arrow-forward" text="عودة"></ion-back-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="selectedReportes"  style="max-width: 100%" (ionChange)="clicked=false">
+    <ion-segment-button value="daily">يومي</ion-segment-button>
+    <ion-segment-button value="month">شهري</ion-segment-button>
+    <ion-segment-button value="year">سنوي</ion-segment-button>
+  </ion-segment>
+  <ng-container>
+    <ion-row class="ion-justify-content-center" *ngIf="selectedReportes=='daily'">
+      <ion-col size="6">
+        <ion-card>
+          <ion-list>
+            <ion-item lines="full" class="ion-text-center" color="theme-primary">
+              <ion-label>التقارير</ion-label>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>المبيعات</ion-label>
+              <ion-note> {{bills}}JOD</ion-note>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>المصاريف</ion-label>
+              <ion-note> {{expenses}}JOD</ion-note>
+            </ion-item>
+
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+  <ng-container>
+    <ion-row class="ion-justify-content-start" *ngIf="selectedReportes=='month'">
+      <ion-col size="6">
+        <ion-card>
+          <ion-list>
+            <form #orderForm="ngForm">
+              <ion-item>
+                <ion-label position="floating">السنة</ion-label>
+                <ion-input [(ngModel)]="year" #year_f='ngModel' min="2020"  type="number" id="year" name="year"
+                           required></ion-input>
+                <p *ngIf="year_f.invalid&&year_f.touched">Please Select correct value</p>
+              </ion-item>
+              <ion-item>
+              <ion-label position="floating">الشهر</ion-label>
+              <ion-input [(ngModel)]="month" #month_f='ngModel' min="1"  max="12" type="number" id="month" name="month"
+                         required></ion-input>
+              <p *ngIf="month_f.invalid &&month_f.touched">Please Select correct value</p>
+
+              </ion-item>
+
+              <ion-button style="width: 100%" [disabled]="orderForm.invalid" color="theme-primary" (click)="getMonth()"> التقرير</ion-button>
+
+            </form>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" *ngIf="clicked">
+        <ion-card>
+          <ion-list>
+            <ion-item lines="full" class="ion-text-center" color="theme-primary">
+              <ion-label>التقارير</ion-label>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>المبيعات</ion-label>
+              <ion-note> {{bills}}JOD</ion-note>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>المصاريف</ion-label>
+              <ion-note> {{expenses}}JOD</ion-note>
+            </ion-item>
+
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ng-container>
+  <ng-container>
+    <ion-row class="ion-justify-content-start" *ngIf="selectedReportes=='year'">
+      <ion-col size="6">
+        <ion-card>
+          <ion-list>
+            <form #orderForm="ngForm">
+              <ion-item>
+                <ion-label position="floating">السنة</ion-label>
+                <ion-input [(ngModel)]="year" #year_f='ngModel' min="2020"  type="number" id="year1" name="year"
+                           required></ion-input>
+                <p *ngIf="year_f.invalid&&year_f.touched">Please Select correct value</p>
+              </ion-item>
+              <ion-button style="width: 100%" [disabled]="orderForm.invalid" color="theme-primary" (click)="getYear()"> التقرير</ion-button>
+
+            </form>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" *ngIf="clicked">
+        <ion-card>
+          <ion-list>
+            <ion-item lines="full" class="ion-text-center" color="theme-primary">
+              <ion-label>التقارير</ion-label>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>المبيعات</ion-label>
+              <ion-note> {{bills}}JOD</ion-note>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>المصاريف</ion-label>
+              <ion-note> {{expenses}}JOD</ion-note>
+            </ion-item>
+
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ng-container>
+</ion-content>

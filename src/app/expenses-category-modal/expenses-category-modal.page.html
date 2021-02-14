@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>المصاريف</ion-title>
+    <ion-label slot="end" (click)="dismiss()">اغلاق</ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #orderForm="ngForm">
+    <ion-item>
+      <ion-label position="floating">المصاريف</ion-label>
+      <ion-input type="text" [(ngModel)]="name" name="name" id="name" #name_e='ngModel' required></ion-input>
+      <p *ngIf="name_e.invalid&&name_e.touched">Please Select correct value</p>
+    </ion-item>
+
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-button [disabled]="orderForm.invalid" (click)="store()" expand="full" color="theme-primary" *ngIf="!id"> اضافة </ion-button>
+  <ion-button [disabled]="orderForm.invalid" (click)="edit()" expand="full" color="theme-primary" *ngIf="id"> تعديل </ion-button>
+</ion-footer>

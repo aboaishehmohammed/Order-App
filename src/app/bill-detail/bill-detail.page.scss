@@ -1,0 +1,36 @@
+.font {
+
+  td {
+    font-size: 12px;
+  }
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+
+  th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+}
+
+.show-print {
+  display: none;
+}
+
+@media print {
+  .print-hide {
+    /* All your print styles go here */
+    display: none !important;
+  }
+  .show-print {
+    page-break-after: always;
+    display: block;
+
+  }
+}
+
+

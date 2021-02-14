@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar color="theme-primary">
+
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>الوجبات</ion-title>
+        <ion-button color="light" slot="end" (click)="presentModal()">اضافة وجبة</ion-button>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item-sliding (ionDrag)="selectedItem=slide" *ngFor="let product of products ;let i = index" #slide>
+        <ion-item [routerLink]="'/product/'+product.id">
+            <ion-label>
+                {{product.p_name}}
+                <p>
+                    {{product.category.name}}
+                </p>
+            </ion-label>
+            <ion-note slot="end" color="primary">
+                {{product.price}} JOD
+            </ion-note>
+        </ion-item>
+        <ion-item-options>
+            <ion-item-option color="danger" (click)="destroy(product)">
+                <ion-icon slot="start" name="trash-outline"></ion-icon>
+                حذف
+            </ion-item-option>
+            <ion-item-option color="secondary" (click)="editModal(product,slide)">
+                <ion-icon slot="start" name="create-outline"></ion-icon>
+                تعديل
+            </ion-item-option>
+        </ion-item-options>
+    </ion-item-sliding>
+
+</ion-content>

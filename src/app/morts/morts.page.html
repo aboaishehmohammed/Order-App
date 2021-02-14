@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="theme-primary">
+    <ion-title>
+الرهونات
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button style="color: white" [defaultHref]="'/'" icon="arrow-forward" text="عودة"></ion-back-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="ion-justify-content-start" *ngIf="morts">
+    <ion-col size="6" *ngFor="let item of morts">
+      <ion-card>
+        <ion-list>
+          <ion-item lines="full" class="ion-text-center" color="theme-primary">
+            <ion-label>الرهونات</ion-label>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label>اسم صاحب الرهن</ion-label>
+            <ion-note> {{item.bill.deliveryData.name}}</ion-note>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label>الرهن</ion-label>
+            <ion-note> {{item.label}}</ion-note>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label>السعر</ion-label>
+            <ion-note> {{item.price}}</ion-note>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label>الكمية</ion-label>
+            <ion-note>{{item.qty}}</ion-note>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label>السعر الاجمالي</ion-label>
+            <ion-note>{{item.qty*item.price}}</ion-note>
+          </ion-item>
+
+          <ion-button expand="block" (click)="destroy(item)" color="success" >
+            <ion-label class="ion-text-wrap">تم الاستلام
+            </ion-label>
+          </ion-button>
+
+          <ion-button expand="block" color="theme-primary" [routerLink]="'/bills/'+item.bill_id">
+            <ion-label class="ion-text-wrap">المزيد
+            </ion-label>
+          </ion-button>
+        </ion-list>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

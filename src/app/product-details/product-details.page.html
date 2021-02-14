@@ -1,0 +1,72 @@
+<ion-header>
+    <ion-toolbar color="theme-primary">
+        <ion-title *ngIf="item">
+            {{item.p_name}}
+        </ion-title>
+        <ion-buttons>
+            <ion-back-button style="color: white" text="عودة" icon="arrow-forward"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="item">
+    <ion-row class="ion-justify-content-center" *ngIf="item">
+        <ion-col size="12">
+            <ion-card>
+                <ion-list>
+                    <ion-item lines="full" class="ion-text-center" color="theme-primary">
+                        <ion-label>الوجبة</ion-label>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label>عدد مرات البيع</ion-label>
+                        <ion-note> {{item.sales_count}}</ion-note>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label>متوسط السعر</ion-label>
+                        <ion-note>{{item.avg}}</ion-note>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label>عدد القطع المباعة</ion-label>
+                        <ion-note>{{item.summ}}</ion-note>
+                    </ion-item>
+
+                </ion-list>
+            </ion-card>
+
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="4"  *ngFor=" let bill of bills">
+            <ion-card [routerLink]="'/bills/'+bill.bill_id">
+            <ion-list>
+                <ion-item lines="full" class="ion-text-center" color="theme-primary">
+                    <ion-label>الفاتورة</ion-label>
+                </ion-item>
+                <ion-item lines="full">
+                    <ion-label>رقم الفاتورة</ion-label>
+                    <ion-note> {{bill.bill_id}}</ion-note>
+                </ion-item>
+                <ion-item lines="full">
+                    <ion-label> السعر</ion-label>
+                    <ion-note>{{bill.price}}</ion-note>
+                </ion-item>
+                <ion-item lines="full">
+                    <ion-label> نوع الوجبة</ion-label>
+                    <ion-note>{{bill.sub_product.p_name}}</ion-note>
+                </ion-item>
+                <ion-item lines="full">
+                    <ion-label>عدد القطع المباعة</ion-label>
+                    <ion-note>{{bill.quantity}}</ion-note>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        </ion-col>
+    </ion-row>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

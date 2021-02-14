@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar color="theme-primary">
+        <ion-title>
+
+            التواصي
+
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button style="color: white" [defaultHref]="'/'" icon="arrow-forward"
+                             text="عودة"></ion-back-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-row class="ion-justify-content-start" *ngIf="deliveries">
+        <ion-col size="6" *ngFor="let item of deliveries">
+            <ion-card style="height: 100%;padding-bottom: 80px">
+                <ion-list>
+                    <ion-item lines="full" class="ion-text-center" color="theme-primary">
+                        <ion-label>التوصيل</ion-label>
+                    </ion-item>
+
+                    <ion-item lines="full">
+                        <ion-label>القيمة</ion-label>
+                        <ion-note> {{item.deliveryData.delivery_fees}}</ion-note>
+                    </ion-item>
+
+                    <ion-item lines="full">
+                        <ion-label>وقت التوصيل</ion-label>
+                        <ion-note>{{item.deliveryData.delivery_time|date:'dd-M-yyyy hh:mm:ss'}}</ion-note>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label>رقم الهاتف</ion-label>
+                        <ion-note>{{item.deliveryData.mobile}}</ion-note>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label class="ion-text-wrap">العنوان
+                            <p>
+                                {{item.deliveryData.address}}
+                            </p></ion-label>
+                    </ion-item>
+
+                </ion-list>
+
+                <div style="position: absolute;width: 100%;min-height: 80px;bottom: 0">
+                    <ion-button expand="block" (click)="orderDone(item)" color="success"
+                                *ngIf="item.order_done==false">
+                        <ion-label class="ion-text-wrap">اتمام التوصيل
+                        </ion-label>
+                    </ion-button>
+                    <ion-button expand="block" color="theme-primary" [routerLink]="'/bills/'+item.id">
+                        <ion-label class="ion-text-wrap">المزيد
+                        </ion-label>
+                    </ion-button>
+                </div>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-content>

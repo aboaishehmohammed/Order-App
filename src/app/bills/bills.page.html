@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar color="theme-primary">
+
+        <ion-buttons slot="start">
+            <ion-menu-button style="color: white"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>الفواتير</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="false">
+    <ion-item-sliding *ngFor="let bill of bills">
+        <ion-item [routerLink]="'/bills/'+bill.id">
+            <ion-label>
+                {{bill.id}}
+                <p>
+                    {{bill.created_at|date:'dd-M-yyyy hh:mm:ss'}}
+                </p>
+            </ion-label>
+            <ion-note slot="end">
+                {{getBillTotal(bill) - bill.sale}}
+            </ion-note>
+        </ion-item>
+        <ion-item-options>
+            <ion-item-option color="danger" (click)="destroy(bill)">
+                <ion-icon slot="start" name="trash-outline"></ion-icon>
+                Delete
+            </ion-item-option>
+        </ion-item-options>
+    </ion-item-sliding>
+</ion-content>
+<ion-content>
+
+    <ion-item-sliding *ngFor="let bill of bills">
+        <ion-item [routerLink]="'/bills/'+bill.id">
+            <ion-label>
+                {{bill.id}}
+                <p>
+                    {{bill.created_at|date:'dd-M-yyyy hh:mm:ss'}}
+                </p>
+            </ion-label>
+            <ion-note slot="end">
+                {{getBillTotal(bill) - bill.sale}}
+            </ion-note>
+        </ion-item>
+        <ion-item-options>
+            <ion-item-option color="danger" (click)="destroy(bill)">
+                <ion-icon slot="start" name="trash-outline"></ion-icon>
+                حذف
+            </ion-item-option>
+        </ion-item-options>
+    </ion-item-sliding>
+
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

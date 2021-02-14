@@ -1,0 +1,165 @@
+<ion-header class="print-hide">
+    <ion-toolbar color="theme-primary">
+        <ion-title>
+
+
+            {{bill.id}}
+
+
+        </ion-title>
+        <ion-buttons>
+            <ion-back-button style="color: white" text="عودة" icon="arrow-forward"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="print-hide">
+    <ng-container>
+        <ion-row>
+            <ion-col size="1">#</ion-col>
+            <ion-col size="3">اسم الوجبة</ion-col>
+            <ion-col size="2">نوع الوجبة</ion-col>
+            <ion-col size="2">
+                الكمية
+            </ion-col>
+            <ion-col size="2">
+                السعر
+            </ion-col>
+            <ion-col size="2">
+                المجموع
+            </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let item of bill.bill_products;let i=index">
+
+            <ion-col size="1">{{i + 1}}</ion-col>
+            <ion-col size="3">{{item.product.p_name}}</ion-col>
+            <ion-col size="2">{{item.sub_product.p_name}}</ion-col>
+            <ion-col size="2">
+                {{item.quantity}}
+            </ion-col>
+            <ion-col size="2">
+                {{item.price}}
+            </ion-col>
+            <ion-col size="2">
+                {{item.quantity * item.price}}
+            </ion-col>
+        </ion-row>
+        <ion-item-divider></ion-item-divider>
+        <ion-row class="ion-justify-content-start">
+            <ion-col size="5" *ngIf="bill.deliveryData">
+                <ion-list>
+                    <ion-item lines="full" class="ion-text-center" color="theme-primary">
+                        <ion-label>التوصيل</ion-label>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label>القيمة</ion-label>
+                        <ion-note> {{bill.deliveryData.delivery_fees}}</ion-note>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label>وقت التوصيل</ion-label>
+                        <ion-note>{{bill.deliveryData.delivery_time|date:'dd-M-yyyy hh:mm:ss'}}</ion-note>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label>رقم الهاتف</ion-label>
+                        <ion-note>{{bill.deliveryData.mobile}}</ion-note>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label class="ion-text-wrap">العنوان
+
+                            <p>
+                                {{bill.deliveryData.address}}
+                            </p></ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+            <ion-col size="5">
+                <ion-list>
+                    <ng-container *ngIf="bill.extra_name">
+                        <ion-item lines="full">
+                            <ion-label>اسم الاضافة</ion-label>
+                            <ion-note>{{bill.extra_name}}</ion-note>
+                        </ion-item>
+                        <ion-item lines="full">
+                            <ion-label>سعر الاضافة</ion-label>
+                            <ion-note>{{bill.extra_price}}</ion-note>
+                        </ion-item>
+                    </ng-container>
+                    <ion-item lines="full">
+                        <ion-label>مجموع الفاتورة</ion-label>
+                        <ion-note>{{getBillTotal()}}</ion-note>
+                    </ion-item>
+
+                    <ng-container *ngIf="bill.sale">
+                        <ion-item lines="full">
+                            <ion-label>قيمة الخصم</ion-label>
+                            <ion-note>{{bill.sale}}</ion-note>
+                        </ion-item>
+                        <ion-item lines="full">
+                            <ion-label>المجموع النهائي</ion-label>
+                            <ion-note>{{getBillTotal() - bill.sale}}</ion-note>
+                        </ion-item>
+
+                    </ng-container>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ng-container>
+
+</ion-content>
+<ion-footer class="print-hide">
+    <ion-button color="theme-primary" (click)="printW()">طباعة</ion-button>
+</ion-footer>
+<div class="show-print">
+    <div style="width: 100%;text-align: center">
+        <img src="/assets/logo.png" style="width: 75px;height: 75px;display: inline-block"> <br>
+        <ion-label>         {{bill.id}}
+        </ion-label>
+    </div>
+    <table class="table font">
+        <tr>
+            <td>#</td>
+            <td>اسم</td>
+            <td>العدد</td>
+            <td>السعر</td>
+        </tr>
+        <tr *ngFor="let item of bill.bill_products;let i=index">
+            <td>{{i + 1}}</td>
+            <td>{{item.product.p_name}} </td>
+            <td> {{item.quantity}}</td>
+            <td> {{item.price}} JOD</td>
+        </tr>
+    </table>
+    <table class="table font" *ngIf="bill.deliveryData">
+        <tr>
+            <td>قيمة التوصيل</td>
+            <td>موعد التوصيل</td>
+            <td>الهاتف</td>
+        </tr>
+        <tr>
+            <td>{{bill.deliveryData.delivery_fees}}JOD</td>
+            <td>{{bill.deliveryData.delivery_time|date:'dd-M hh:mm'}}</td>
+            <td>{{bill.deliveryData.mobile}}</td>
+        </tr>
+    </table>
+    <table class="table font">
+        <tr>
+            <ng-container *ngIf="bill.extra_price">
+                <td>اسم الاضافة</td>
+                <td>سعر الاضافة</td>
+            </ng-container>
+            <td *ngIf="bill.sale">قيمة الخصم</td>
+            <td>السعر الاجمالي</td>
+        </tr>
+        <tr>
+            <ng-container *ngIf="bill.extra_price">
+                <td>{{bill.extra_name}}</td>
+                <td>{{bill.extra_price}}</td>
+            </ng-container>
+            <td *ngIf="bill.sale">{{bill.sale}}JOD</td>
+            <td>{{getBillTotal() - bill.sale}}JOD</td>
+        </tr>
+    </table>
+    <div class="font" style="font-size: 10px;text-align: center">
+        0797847999 - مرج الحمام مقابل الكتيبة الخامسة
+    </div>
+</div>
